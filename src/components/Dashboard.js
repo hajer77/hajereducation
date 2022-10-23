@@ -5,7 +5,8 @@ import { useState } from 'react'
 import { Card,Button ,Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-
+import { Container } from "react-bootstrap";
+import FirstMenu from './FirstMenu' ;
 
 export default function Dashboard() {
   const[error,setError]=useState("")
@@ -21,12 +22,20 @@ export default function Dashboard() {
    navigate("/login")
    } catch {
   setError('Failed to log out')
-  }
-}
+   }
+   }
 
 
   return (
-    <div>
+    <React.Fragment>
+    <FirstMenu/>  
+    <Container
+    
+    className="d-flex align-items-center justify-content-center"
+    style={ {minHeight : "100vh"}}
+    >
+      
+   <div className="w-100" style={{maxWidth :"400px"}}>
       <Card className="text-center">
       <Card.Header>My account</Card.Header>
       <Card.Body>
@@ -45,5 +54,8 @@ export default function Dashboard() {
       <Card.Footer className="text-muted">HajerEducation</Card.Footer>
     </Card>
     </div>
+    
+    </Container>
+    </React.Fragment>
   )
 }

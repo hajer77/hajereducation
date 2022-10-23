@@ -6,15 +6,14 @@ import Dashboard from "./Dashboard";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Todo from "./Todo";
+import ListTodo from  "./ListTodo"
+import FirstMenu from "./FirstMenu";
 
 function App() {
   return(
+    <div>
     
-    <Container
-     className="d-flex align-items-center justify-content-center"
-     style={ {minHeight : "100vh"}}
-     >
-    <div className="w-100" style={{maxWidth :"400px"}}>
       <Router>
 
       <AuthProvider>
@@ -24,6 +23,9 @@ function App() {
         <Route exact path="/login" element={<Login/>} />
         <Route exact path="/forgot-password" element={<ForgotPassword/>} />
         <Route exact path="/update-profile" element={<UpdateProfile/>} />
+        <Route exact path="/todo" element={<Todo/>} />
+        <Route exact path="/list-todo" element={<ListTodo/>} />
+        <Route exact path="/first-menu" element={<FirstMenu/>} />
         </Routes>
      
       </AuthProvider>
@@ -33,7 +35,8 @@ function App() {
     
   
     </div>
-    </Container>
+
+   
   
   
   )

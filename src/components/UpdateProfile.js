@@ -2,7 +2,7 @@ import React ,{useRef, useState} from 'react'
 import { Form ,Button,Card,Alert } from 'react-bootstrap'
 import { Link ,useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-
+import { Container } from "react-bootstrap";
 
 export default function UpdateProfile() {
     const emailRef=useRef()
@@ -46,7 +46,11 @@ export default function UpdateProfile() {
       
     }
   return (
-    <>
+    <Container
+    className="d-flex align-items-center justify-content-center"
+    style={ {minHeight : "100vh"}}
+    >
+   <div className="w-100" style={{maxWidth :"400px"}}>
     <Card className="text-center">
       <Card.Header>Update Profile</Card.Header>
       <Card.Body>
@@ -82,6 +86,7 @@ export default function UpdateProfile() {
           </Card.Body>
       <Card.Footer className="text-muted"><Link to ="/">Cancel</Link></Card.Footer>
     </Card>
-    </>
+    </div>
+    </Container>
   )
 }
