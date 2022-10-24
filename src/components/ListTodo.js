@@ -3,6 +3,7 @@ import {useState} from 'react';
 import { db } from '../firebase';
 import{query,
        collection,
+       where,
        onSnapshot ,
        deleteDoc,
        updateDoc,
@@ -17,18 +18,21 @@ import {List,
         Checkbox,
         IconButton} from  '@mui/material' ;
 
+import { useAuth } from '../contexts/AuthContext'
 
 
  
   
 export default function CheckboxList(todo) {
+
+  const {currentUser }= useAuth() ; 
   const[todos,setTodos]=useState([]);
   const [checked, setChecked] = React.useState([0]);
- const date = useState('');
-
+  
+  
  // Read todo from firebase
  useEffect(() => {
-  const q = query(collection(db, 'todos'));
+  const q = query(collection(db, 'todos'), where("user_uid", "==", "/users/"+`${currentUser.uid}`));
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let todosArr = [];
     querySnapshot.forEach((doc) => {

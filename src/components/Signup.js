@@ -3,17 +3,21 @@ import { Form ,Button,Card,Alert } from 'react-bootstrap'
 import { Link ,useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Container } from "react-bootstrap";
-
+import { doc, setDoc ,serverTimestamp } from "firebase/firestore";
+import { db } from '../firebase';
 
 export default function Signup() {
     const emailRef=useRef()
     const passwordRef=useRef()
     const passwordConfirmRef=useRef()
-    const {signup }= useAuth()
+    const {signup  }= useAuth()
     const [error,setError]= useState("")
     const [loading ,setLoading]= useState(false)
     const navigate = useNavigate()
 
+
+    //Signup && add user to firestore
+    
     async function handleSubmit(e){
       e.preventDefault()
 
@@ -25,11 +29,25 @@ export default function Signup() {
         try {
           setError("")
           setLoading(true)
-          await signup(emailRef.current.value ,passwordRef.current.value)
-          navigate("/login")
+          await signup(emailRef.current.value ,passwordRef.current.value).then(async(userRec)=>{
+            const user = userRec.user;
+            console.log("userUI:",user.uid);
+            await await setDoc(doc(db, "users", user.uid), {
+              email: emailRef.current.value,
+              password: passwordRef.current.value,
+              timestamp : serverTimestamp(),
+            }).catch((error)=>{
+              console.log(error);
+            })
+            });
+         
+           
+            navigate("/login")
+        
+          
         } catch (error) {
+
           console.log(error)
-          console.log(emailRef.current.value)
           setError("Failed to create an account")
         }
         setLoading(false)

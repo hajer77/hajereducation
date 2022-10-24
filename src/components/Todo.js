@@ -12,16 +12,21 @@ import { db } from '../firebase';
 import { addDoc,
          collection ,
          serverTimestamp} from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Todo() {
+
   
-const [todos, setTodos] = useState([]);
+const {currentUser }= useAuth() ; 
 const [input, setInput] = useState("");
 const[error,setError]=useState("");
+
+
 
 //Add TODO
 const addTodo = async (e) => {
   e.preventDefault(e);
+  
   if (input === '') {
     setError('Please enter a valid todo');
     return;
@@ -30,6 +35,7 @@ const addTodo = async (e) => {
     todo: input,
     inprogress: false,
     timestamp : serverTimestamp(),
+    user_uid:"/users/"+`${currentUser.uid}`,
   });
   setInput('');
 };
